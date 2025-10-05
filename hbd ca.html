@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BD MANTAN</title>
+<style>
+  :root{
+    --bg1:#fff0f6;
+    --pink1:#ff8fb0;
+    --pink2:#ff4d94;
+    --accent:#ffd6e8;
+    --card:#ffffffcc;
+    --shadow:0 6px 20px rgba(0,0,0,0.12);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,sans-serif;
+    background:linear-gradient(135deg,var(--bg1),#ffeef8 60%);
+    color:#2b0b18;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .app{
+    width:100%;
+    max-width:420px;
+    background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(255,255,255,0.9));
+    border-radius:22px;
+    padding:18px;
+    box-shadow:var(--shadow);
+  }
+  header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  header h1{font-size:1.05rem;margin:0}
+  main{min-height:320px}
+  .card{
+    background:var(--card);border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,0.06);
+  }
+  label{display:block;margin-bottom:6px}
+  input[type=password]{width:100%;padding:12px;border-radius:12px;border:1px solid #f0dbe6;background:#fff;font-size:1rem}
+  button{cursor:pointer;border:0;padding:10px 14px;border-radius:12px;font-weight:700}
+  .btn-pink{background:linear-gradient(90deg,var(--pink2),var(--pink1));color:white;transition:0.3s}
+  .btn-pink:hover{opacity:0.85;transform:scale(1.03)}
+  .small{font-size:0.85rem;color:#5a2b3b}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+  .tile{
+    aspect-ratio:1/1;border-radius:14px;background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .tile:hover{transform:scale(1.05);box-shadow:0 10px 24px rgba(0,0,0,0.1)}
+  .tile img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:none}
+  .tile .placeholder{
+    width:70%;height:70%;
+    border-radius:8px;
+    background:linear-gradient(180deg,var(--pink1),var(--pink2));
+    display:flex;align-items:center;justify-content:center;
+    color:white;font-weight:700;font-size:1.1rem;
+    box-shadow:inset 0 0 8px rgba(255,255,255,0.3);
+  }
+  video{width:100%;border-radius:12px;display:block;margin-top:12px}
+  .editor{width:100%;min-height:90px;border-radius:10px;padding:10px;border:1px solid #f0dbe6;background:#fff}
+  footer{margin-top:12px;font-size:0.8rem;color:#6b4250;text-align:center}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="app" id="app">
+  <header>
+    <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--pink2),var(--pink1));display:flex;align-items:center;justify-content:center;color:white;font-weight:800">CA</div>
+    <div>
+      <h1>Happy Birthday</h1>
+      <div class="small">Kejutan kecil untuk mantan bg</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- LOGIN -->
+    <section id="login" class="card">
+      <h2>HARI CA KINI</h2>
+      <label for="pw">Kata Sandi</label>
+      <input id="pw" type="password" placeholder="Kata sandi..." />
+      <button id="btn-login" class="btn-pink" style="width:100%;margin-top:8px">Masuk</button>
+      <p class="small">By mantan</p>
+    </section>
+
+    <!-- FOTO -->
+    <section id="photos" class="card hidden">
+      <h2>Foto Kenangan</h2>
+      <div class="grid" id="grid"></div>
+      <button id="next-msg" class="btn-pink" style="width:100%;margin-top:10px">Lanjut ke Ucapan 🎂</button>
+    </section>
+
+    <!-- UCAPAN -->
+    <section id="message" class="card hidden">
+      <h2>Ucapan Untukmu</h2>
+      <div id="msg" class="editor" contenteditable="true">
+        dak taraso lah sajauah ko wak,wak yang dulu carito tentang masa depan baduo kini lah sa jauah ko
+        tapi bialah setiap kejadian maagiah pelajaran,kok dak dek pelajaran ko dak ka mungkin bg bisa sajauah ko do 
+        semoga urang urang baik j hal hal baik taruh mengelilingi ca
+        bd yo ca
+      </div>
+      <button id="next-video" class="btn-pink" style="width:100%;margin-top:10px">Lanjut ke Video 🎥</button>
+    </section>
+
+    <!-- VIDEO -->
+    <section id="video" class="card hidden">
+      <h2>Video Dari Saya 🎬</h2>
+      <video id="vid" controls>
+        <source src="video.mp4" type="video/mp4">
+        Browser tidak mendukung video.
+      </video>
+    </section>
+  </main>
+  <footer>Dibuat khusus untuk mantan bg</footer>
+</div>
+
+<script>
+const PASSWORD = "Aidil anisa";
+const login = document.getElementById("login"),
+      photos = document.getElementById("photos"),
+      message = document.getElementById("message"),
+      video = document.getElementById("video");
+
+function show(s) {
+  [login, photos, message, video].forEach(e => e.classList.add("hidden"));
+  s.classList.remove("hidden");
+}
+
+document.getElementById("btn-login").onclick = () => {
+  const pw = document.getElementById("pw").value.trim();
+  if (pw === PASSWORD) {
+    alert("selamat menikmati mantan bg 💗");
+    show(photos);
+  } else alert("jaan typo 😅");
+};
+
+// === FOTO SECTION ===
+const grid = document.getElementById("grid");
+const folderImages = ["ca1.png", "ca2.png", "ca3.png", "ca4.png"];
+
+// render kotak placeholder
+function renderGridPlaceholders() {
+  grid.innerHTML = "";
+  folderImages.forEach((_, i) => {
+    const t = document.createElement("div");
+    t.className = "tile";
+    const ph = document.createElement("div");
+    ph.className = "placeholder";
+    ph.textContent = "Klik 💗";
+    t.appendChild(ph);
+
+    // saat diklik, ganti placeholder jadi foto
+    t.addEventListener("click", () => {
+      const img = document.createElement("img");
+      img.src = folderImages[i];
+      img.alt = "Foto " + (i + 1);
+      ph.replaceWith(img);
+      img.style.display = "block";
+    });
+
+    grid.appendChild(t);
+  });
+}
+renderGridPlaceholders();
+
+document.getElementById("next-msg").onclick = () => show(message);
+document.getElementById("next-video").onclick = () => show(video);
+</script>
+
+</body>
+</html>
