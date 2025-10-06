@@ -69,9 +69,27 @@
 </style>
 </head>
 <body>
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
+
+<!-- Musik Latar -->
+<audio id="bgm" loop>
+  <source src="nadif.mp3" type="audio/mpeg">
 </audio>
+
+<script>
+window.addEventListener("load", () => {
+  const audio = document.getElementById("bgm");
+  // coba langsung play
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      // kalau autoplay diblokir, tunggu klik pertama user
+      document.body.addEventListener("click", () => {
+        audio.play();
+      }, { once: true });
+    });
+  }
+});
+</script>
 
 <div class="app" id="app">
   <header>
@@ -147,7 +165,6 @@ document.getElementById("btn-login").onclick = () => {
 const grid = document.getElementById("grid");
 const folderImages = ["ca1.png", "ca2.png", "ca3.png", "ca4.png"];
 
-// render kotak placeholder
 function renderGridPlaceholders() {
   grid.innerHTML = "";
   folderImages.forEach((_, i) => {
@@ -158,7 +175,6 @@ function renderGridPlaceholders() {
     ph.textContent = "Klik 💗";
     t.appendChild(ph);
 
-    // saat diklik, ganti placeholder jadi foto
     t.addEventListener("click", () => {
       const img = document.createElement("img");
       img.src = folderImages[i];
