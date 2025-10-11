@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BD MANTAN</title>
+<title>BD MANTAN 💔</title>
 <style>
   :root{
     --bg1:#fff0f6;
@@ -11,191 +11,165 @@
     --pink2:#ff4d94;
     --accent:#ffd6e8;
     --card:#ffffffcc;
-    --shadow:0 6px 20px rgba(0,0,0,0.12);
   }
-  *{box-sizing:border-box}
+
   body{
     margin:0;
-    font-family:Inter,system-ui,sans-serif;
-    background:linear-gradient(135deg,var(--bg1),#ffeef8 60%);
-    color:#2b0b18;
-    min-height:100vh;
+    font-family:"Poppins",sans-serif;
+    background:var(--bg1);
     display:flex;
-    align-items:center;
     justify-content:center;
-    padding:20px;
+    align-items:center;
+    min-height:100vh;
+    overflow:hidden;
   }
-  .app{
-    width:100%;
-    max-width:420px;
-    background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(255,255,255,0.9));
-    border-radius:22px;
-    padding:18px;
-    box-shadow:var(--shadow);
+
+  /* Efek lope jatuh */
+  .heart {
+    position: fixed;
+    top: -10px;
+    color: var(--pink2);
+    font-size: 20px;
+    animation: fall linear forwards;
+    z-index: 0;
+    opacity: 0.8;
   }
-  header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-  header h1{font-size:1.05rem;margin:0}
-  main{min-height:320px}
-  .card{
-    background:var(--card);border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,0.06);
+  @keyframes fall {
+    0% {transform: translateY(0) rotate(0deg);opacity:1;}
+    100% {transform: translateY(100vh) rotate(720deg);opacity:0;}
   }
-  label{display:block;margin-bottom:6px}
-  input[type=password]{width:100%;padding:12px;border-radius:12px;border:1px solid #f0dbe6;background:#fff;font-size:1rem}
-  button{cursor:pointer;border:0;padding:10px 14px;border-radius:12px;font-weight:700}
-  .btn-pink{background:linear-gradient(90deg,var(--pink2),var(--pink1));color:white;transition:0.3s}
-  .btn-pink:hover{opacity:0.85;transform:scale(1.03)}
-  .small{font-size:0.85rem;color:#5a2b3b}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
-  .tile{
-    aspect-ratio:1/1;border-radius:14px;background:var(--accent);
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.06);
-    transition:transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .tile:hover{transform:scale(1.05);box-shadow:0 10px 24px rgba(0,0,0,0.1)}
-  .tile img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:none}
-  .tile .placeholder{
-    width:70%;height:70%;
-    border-radius:8px;
-    background:linear-gradient(180deg,var(--pink1),var(--pink2));
-    display:flex;align-items:center;justify-content:center;
-    color:white;font-weight:700;font-size:1.1rem;
-    box-shadow:inset 0 0 8px rgba(255,255,255,0.3);
-  }
-  video{width:100%;border-radius:12px;display:block;margin-top:12px}
-  .editor{width:100%;min-height:90px;border-radius:10px;padding:10px;border:1px solid #f0dbe6;background:#fff}
-  footer{margin-top:12px;font-size:0.8rem;color:#6b4250;text-align:center}
+
   .hidden{display:none}
+  .card{
+    position:relative;
+    z-index:1;
+    background:var(--card);
+    backdrop-filter:blur(8px);
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 6px 16px rgba(0,0,0,0.1);
+    text-align:center;
+    width:90%;
+    max-width:350px;
+    animation:fadeIn 1.5s ease;
+  }
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(30px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  input{
+    border:2px solid var(--pink1);
+    border-radius:10px;
+    padding:10px;
+    width:90%;
+    outline:none;
+    text-align:center;
+    margin-bottom:10px;
+  }
+  button{
+    background:var(--pink2);
+    border:none;
+    color:#fff;
+    border-radius:10px;
+    padding:10px 20px;
+    cursor:pointer;
+    transition:0.3s;
+  }
+  button:hover{background:var(--pink1)}
+  h2{color:var(--pink2)}
+
+  img{
+    max-width:100%;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  iframe{
+    width:100%;
+    height:500px;
+    max-height:75vh;
+    border-radius:12px;
+  }
+
+  p.small{color:#555;font-size:14px;}
 </style>
 </head>
 <body>
 
-<!-- Musik Latar -->
-<audio id="bgm" loop>
-  <source src="camonokrom.mp3" type="audio/mpeg">
-</audio>
+  <!-- LOGIN -->
+  <section id="login" class="card">
+    <h2>Masukkan Password 💞</h2>
+    <input id="pw" type="password" placeholder="Ketik di sini...">
+    <button onclick="cek()">Masuk</button>
+    <p class="small">💗 Untuk kamu yang spesial 💗</p>
+  </section>
 
-<script>
-window.addEventListener("load", () => {
-  const audio = document.getElementById("bgm");
-  // coba langsung play
-  const playPromise = audio.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(() => {
-      // kalau autoplay diblokir, tunggu klik pertama user
-      document.body.addEventListener("click", () => {
-        audio.play();
-      }, { once: true });
-    });
-  }
-});
-</script>
+  <!-- FOTO -->
+  <section id="photos" class="card hidden">
+    <h2>Kenangan Kita 📸</h2>
+    <img src="ca1.png" alt="Foto 1">
+    <p class="small">💗 Waktu kita masih bareng 💗</p>
+    <button onclick="show(message)">Lanjut ➜</button>
+  </section>
 
-<div class="app" id="app">
-  <header>
-    <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--pink2),var(--pink1));display:flex;align-items:center;justify-content:center;color:white;font-weight:800">CA</div>
-    <div>
-      <h1>Happy Birthday</h1>
-      <div class="small">Kejutan kecil untuk mantan bg</div>
+  <!-- PESAN -->
+  <section id="message" class="card hidden">
+    <h2>Pesan Dari Aku 💌</h2>
+    <p>Selamat ulang tahun...  
+    Mungkin aku bukan siapa-siapa lagi,  
+    tapi doaku masih sama: semoga kamu bahagia 💗</p>
+    <button onclick="show(video)">Lihat Video 🎬</button>
+  </section>
+
+  <!-- VIDEO -->
+  <section id="video" class="card hidden">
+    <h2>Video Dari Saya 🎬</h2>
+    <div style="position:relative;overflow:hidden;border-radius:12px;">
+      <iframe
+        src="https://www.youtube.com/embed/jEckhAobk30?rel=0&showinfo=0"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
     </div>
-  </header>
-
-  <main>
-    <!-- LOGIN -->
-    <section id="login" class="card">
-      <h2>HARI CA KINI</h2>
-      <label for="pw">Kata Sandi</label>
-      <input id="pw" type="password" placeholder="Kata sandi..." />
-      <button id="btn-login" class="btn-pink" style="width:100%;margin-top:8px">Masuk</button>
-      <p class="small">By mantan</p>
-    </section>
-
-    <!-- FOTO -->
-    <section id="photos" class="card hidden">
-      <h2>Foto Kenangan</h2>
-      <div class="grid" id="grid"></div>
-      <button id="next-msg" class="btn-pink" style="width:100%;margin-top:10px">Lanjut ke Ucapan 🎂</button>
-    </section>
-
-    <!-- UCAPAN -->
-    <section id="message" class="card hidden">
-      <h2>Ucapan Untukmu</h2>
-      <div id="msg" class="editor" contenteditable="true">
-        dak taraso lah sajauah ko wak,wak yang dulu carito tentang masa depan baduo kini lah sa jauah ko
-        tapi bialah setiap kejadian maagiah pelajaran,kok dak dek pelajaran ko dak ka mungkin bg bisa sajauah ko do 
-        semoga urang urang baik j hal hal baik taruh mengelilingi ca
-        bd yo ca
-      </div>
-      <button id="next-video" class="btn-pink" style="width:100%;margin-top:10px">Lanjut ke Video 🎥</button>
-    </section>
-
-    <!-- VIDEO -->
-    <section id="video" class="card hidden">
-      <h2>Video Dari Saya 🎬</h2>
-      <video id="vid" controls>
-        <source src="https://youtube.com/shorts/jEckhAobk30?si=eNxXgYHx31yTAHBf
-
-          " type="video/mp4">
-        Browser tidak mendukung video.
-      </video>
-    </section>
-  </main>
-  <footer>Dibuat khusus untuk mantan bg</footer>
-</div>
+    <p class="small">💗 Dari hati mantan bg 💗</p>
+  </section>
 
 <script>
-const PASSWORD = "Ai";
-const login = document.getElementById("login"),
-      photos = document.getElementById("photos"),
-      message = document.getElementById("message"),
-      video = document.getElementById("video");
+const PASSWORD="Aidil anisa";
+const login=document.getElementById("login"),
+      photos=document.getElementById("photos"),
+      message=document.getElementById("message"),
+      video=document.getElementById("video");
 
-function show(s) {
-  [login, photos, message, video].forEach(e => e.classList.add("hidden"));
+function show(s){
+  [login,photos,message,video].forEach(e=>e.classList.add("hidden"));
   s.classList.remove("hidden");
 }
-
-document.getElementById("btn-login").onclick = () => {
-  const pw = document.getElementById("pw").value.trim();
-  if (pw === PASSWORD) {
-    alert("selamat menikmati mantan bg 💗");
+function cek(){
+  const val=document.getElementById("pw").value.trim();
+  if(val===PASSWORD){
     show(photos);
-  } else alert("jaan typo 😅");
-};
-
-// === FOTO SECTION ===
-const grid = document.getElementById("grid");
-const folderImages = ["ca1.png", "ca2.png", "ca3.png", "ca4.png"];
-
-function renderGridPlaceholders() {
-  grid.innerHTML = "";
-  folderImages.forEach((_, i) => {
-    const t = document.createElement("div");
-    t.className = "tile";
-    const ph = document.createElement("div");
-    ph.className = "placeholder";
-    ph.textContent = "Klik 💗";
-    t.appendChild(ph);
-
-    t.addEventListener("click", () => {
-      const img = document.createElement("img");
-      img.src = folderImages[i];
-      img.alt = "Foto " + (i + 1);
-      ph.replaceWith(img);
-      img.style.display = "block";
-    });
-
-    grid.appendChild(t);
-  });
+  }else{
+    alert("Password salah 💔");
+  }
 }
-renderGridPlaceholders();
 
-document.getElementById("next-msg").onclick = () => show(message);
-document.getElementById("next-video").onclick = () => show(video);
+/* Efek lope jatuh */
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerHTML = '💗';
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.animationDuration = (3 + Math.random() * 5) + 's';
+  heart.style.fontSize = (14 + Math.random() * 20) + 'px';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 300);
 </script>
 
 </body>
 </html>
-
-
-
